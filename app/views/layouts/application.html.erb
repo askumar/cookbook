@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+  <head>
+    <title><%= h(yield(:title) || "Mytube") %></title>
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag 'style' %>
+    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag 'flowplayer-3.2.4.min' %>
+
+    <%= yield(:head) %>
+  </head>
+  <body>
+
+    <div id="header">
+      <h1>Online Cook Book</h1>
+      <ul>
+        <li>
+          <%= link_to root_path do %>
+            <span>Home</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to recipes_path do %>
+            <span>Recipes</span>
+          <% end %>
+        </li>
+      </ul>
+      
+      <p id="welcome_row">
+        <% if user_signed_in? -%>
+          Welcome back,
+          <%= current_user.email %> |
+          <%= link_to 'My info', edit_user_registration_path %> |
+          <%= link_to 'Sign out', destroy_user_session_path %>
+        <% end -%>
+      </p>
+    </div>
+    <div class="colmask threecol">
+      <div class="colmid">        
+        <div class="colleft">
+          <div class="col1">
+            <%- flash.each do |name, msg| -%>
+              <%= content_tag :div, msg, :id => "#{name}" if msg.is_a?(String) %>
+            <%- end -%>
+            <%= yield %></div>
+          <div class="col2">
+            <h2>Categories</h2>
+            <ul id="categories">
+              <% @recipes_by_category.each do |category,recipes| %>
+                <li><%= category %>
+                  <ul>
+                    <% recipes.each do |recipe| %>
+                      <li><%= link_to recipe.name, recipe %></li>
+                    <% end %>  
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col3"><%= yield :right %></div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <p><%= yield :footer %></p>
+    </div>
+  </body>
+</html>

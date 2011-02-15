@@ -1,0 +1,32 @@
+<h1>Listing recipes</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Instructions</th>
+    <th>Category</th>
+    <% if current_user.admin? %>
+    <th></th>
+    <th></th>
+    <th></th>
+    <% end %>
+  </tr>
+
+<% @recipes.each do |recipe| %>
+  <tr>
+    <td><%= recipe.name %></td>
+    <td><%= recipe.instructions %></td>
+    <td><%= recipe.category %></td>
+    <% if current_user.admin? %>
+    <td><%= link_to 'Show', recipe %></td>
+    <td><%= link_to 'Edit', edit_recipe_path(recipe) %></td>
+    <td><%= link_to 'Destroy', recipe, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+<% if current_user.admin? %>
+<br />
+
+<%= link_to 'New Recipe', new_recipe_path %>
+<% end %>

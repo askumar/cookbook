@@ -1,0 +1,7 @@
+<h1>Welcome to the online Cook Book!</h1>
+<% unless user_signed_in? -%>
+  You need to <%= link_to 'register', new_user_registration_path %> to be able to watch the videos. It is free!<br/>
+  If you already registered, please <%= link_to 'sign in', new_user_session_path %>!
+<% end -%>
+
+Here will be some very important message.

@@ -1,0 +1,21 @@
+<span class="title"><%= @recipe.name %></span>
+<% if current_user.admin? %>
+<span class="links"><%= link_to 'Edit', edit_recipe_path(@recipe) %> | <%= link_to 'Back', recipes_path %></span>
+<% end %>
+<br/><br/>
+
+<span><b>Category:</b><%= @recipe.category %></span>
+<a href="<%= @recipe.video_url %>" style="display:block;width:425px;height:300px;margin: 0 auto" id="player"></a>
+<script language="JavaScript">
+  flowplayer("player", "/flowplayer-3.2.5.swf",  {
+    clip: {
+      autoPlay: true,
+      autoBuffering: false
+    }
+  });
+</script>
+
+<p>
+  <b>Instructions:</b>
+  <%= raw @recipe.instructions_as_html %>
+</p>
